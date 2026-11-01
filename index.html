@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munazza Farees - Network Engineer Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        lux: {
+                            emerald: '#0F6B4F',
+                            forest: '#0B2E20',
+                            gold: '#D4AF37',
+                            black: '#000000',
+                            antiquegold: '#3E3A1D',
+                            charcoal: '#1C1C24'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --emerald: #0F6B4F;
+            --forest: #0B2E20;
+            --gold: #D4AF37;
+            --black: #000000;
+            --antiquegold: #3E3A1D;
+            --charcoal: #1C1C24;
+        }
+
+        body {
+            background-color: var(--black);
+            color: #E6E6E6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #FFF1C5 0%, #D4AF37 50%, #9A7B1C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3E3A1D;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Cert Carousel 3D Cards */
+        .cert-card {
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            user-select: none;
+        }
+
+        .cert-card.prev {
+            transform: scale(0.82) translateX(-85%) rotateY(12deg);
+            opacity: 0.5;
+            z-index: 10;
+            filter: blur(1px);
+        }
+
+        .cert-card.active {
+            transform: scale(1.02) translateX(0) rotateY(0deg);
+            opacity: 1;
+            z-index: 30;
+            box-shadow: 0 15px 45px rgba(212, 175, 55, 0.3);
+            border-color: #D4AF37;
+        }
+
+        .cert-card.next {
+            transform: scale(0.82) translateX(85%) rotateY(-12deg);
+            opacity: 0.5;
+            z-index: 10;
+            filter: blur(1px);
+        }
+
+        .cert-card.hidden-slide {
+            transform: scale(0.7) translateX(0);
+            opacity: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Modal Animation */
+        #cert-modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #cert-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #cert-modal.closed {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body class="antialiased text-[#E6E6E6]">
+
+    <!-- NAVBAR -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#000000]/90 backdrop-blur-md border-b border-[#3E3A1D]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-pulse"></span>
+                <span class="font-cinzel text-2xl tracking-widest text-[#D4AF37] font-bold">MF</span>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-6 text-xs font-mono tracking-wider text-gray-300">
+                <a href="#skills" class="hover:text-[#D4AF37] transition-colors">SKILLS</a>
+                <a href="#internships" class="hover:text-[#D4AF37] transition-colors">INTERNSHIPS</a>
+                <a href="#projects" class="hover:text-[#D4AF37] transition-colors">PROJECTS</a>
+                <a href="#education" class="hover:text-[#D4AF37] transition-colors">EDUCATION</a>
+                <a href="#certifications" class="hover:text-[#D4AF37] transition-colors">CERTIFICATIONS</a>
+                <a href="#contact" class="hover:text-[#D4AF37] transition-colors">CONTACT</a>
+            </nav>
+
+            <button id="mobile-toggle" class="md:hidden text-[#D4AF37] p-2" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-[#1C1C24] border-b border-[#3E3A1D] px-6 py-4 space-y-3 font-mono text-xs">
+            <a href="#skills" class="block hover:text-[#D4AF37]">SKILLS</a>
+            <a href="#internships" class="block hover:text-[#D4AF37]">INTERNSHIPS</a>
+            <a href="#projects" class="block hover:text-[#D4AF37]">PROJECTS</a>
+            <a href="#education" class="block hover:text-[#D4AF37]">EDUCATION</a>
+            <a href="#certifications" class="block hover:text-[#D4AF37]">CERTIFICATIONS</a>
+            <a href="#contact" class="block hover:text-[#D4AF37]">CONTACT</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION WITH MOVING STARFIELD BACKGROUND -->
+    <section id="hero" class="relative min-h-[85vh] flex items-center justify-center py-16 overflow-hidden mt-10">
+
+        <!-- BACKGROUND CANVAS FOR MOVING STARS/PARTICLES -->
+        <canvas id="starfield-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <div class="relative z-10 w-full max-w-5xl mx-auto space-y-10 text-center">
+
+            <!-- 1. NAME & DESIGNATION AT THE TOP -->
+            <div class="space-y-3">
+                <h1
+                    class="text-6xl sm:text-8xl font-black font-cinzel text-white tracking-widest leading-none drop-shadow-md">
+                    MUNAZZA <span class="text-gold-gradient">FAREES</span>
+                </h1>
+                <p class="text-sm sm:text-base font-mono text-[#D4AF37] font-semibold uppercase tracking-widest">
+                    NETWORK GRADUATE | CCNA CERTIFIED | WARANGAL, IND | OPEN TO WORK
+                </p>
+            </div>
+
+            <!-- 2. EXECUTIVE SUMMARY, LOCATION & TOP 3 DOMAINS BOX BELOW -->
+            <div
+                class="bg-[#1C1C24]/90 p-8 sm:p-10 rounded-3xl border border-[#3E3A1D] backdrop-blur-md shadow-2xl text-left space-y-6 max-w-4xl mx-auto">
+
+                <!-- EXECUTIVE SUMMARY -->
+                <div class="space-y-2">
+                    <div class="text-xs font-mono text-[#D4AF37] uppercase font-bold tracking-widest">About Me
+                    </div>
+                    <p class="text-sm sm:text-base text-gray-200 leading-relaxed">
+                        CCNA-certified graduate with hands-on experience in routing and switching, VLAN segmentation,
+                        firewall configuration, and network security monitoring. Proficient with Cisco ISR routers,
+                        Catalyst switches, GNS3, and Packet Tracer — ready to contribute from day one.
+                    </p>
+                </div>
+
+                <!-- LOCATION DIRECTLY BELOW SUMMARY -->
+                <!-- <div
+                    class="pt-4 border-t border-[#3E3A1D] flex items-center space-x-3 text-xs font-mono text-[#D4AF37]">
+                    <i class="fa-solid fa-location-dot text-base text-[#D4AF37]"></i>
+                    <span class="font-bold uppercase">WARANGAL, INDIA</span>
+                    <span class="text-gray-500">|</span>
+                    <span class="px-3 py-1 rounded-full bg-[#0F6B4F] text-white text-[11px] font-bold shadow-sm">OPEN TO
+                        WORK</span>
+                </div> -->
+
+                <!-- TOP 3 DOMAINS DIRECTLY BELOW LOCATION -->
+                <div class="space-y-3 pt-2">
+                    <div class="text-xs font-mono text-gray-400 uppercase font-bold tracking-wider">DOMAINS</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div
+                            class="p-3.5 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all text-center">
+                            <i class="fa-solid fa-route text-[#D4AF37] text-xl mb-1.5"></i>
+                            <div class="text-xs font-mono font-semibold text-white">Network Routing & Security</div>
+                        </div>
+                        <div
+                            class="p-3.5 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all text-center">
+                            <i class="fa-solid fa-shield-halved text-[#D4AF37] text-xl mb-1.5"></i>
+                            <div class="text-xs font-mono font-semibold text-white">SIEM & Threat Monitoring</div>
+                        </div>
+                        <div
+                            class="p-3.5 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all text-center">
+                            <i class="fa-solid fa-user-lock text-[#D4AF37] text-xl mb-1.5"></i>
+                            <div class="text-xs font-mono font-semibold text-white">Steganography & Cryptography</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 2: SKILLS (CENTERED TITLE & SPACED GRID CARDS) -->
+    <section id="skills" class="space-y-8 py-16 mb-16">
+        <div class="text-center border-b border-[#D4AF37] pb-4">
+            <h2 class="text-4xl font-extrabold font-cinzel text-white">SKILLS</h2>
+        </div>
+
+        <!-- DISTINCTLY SPACED 2-COLUMN GRID CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div
+                class="bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-2xl p-6 shadow-xl hover:-translate-y-1 space-y-4">
+                <div class="flex items-center space-x-3 pb-3 border-b border-[#3E3A1D]">
+                    <i class="fa-solid fa-route text-[#D4AF37] text-xl"></i>
+                    <h3 class="text-sm font-mono uppercase font-bold text-[#D4AF37] tracking-wider">ROUTING PROTOCOLS
+                    </h3>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Static
+                        Routing</span>
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">OSPF</span>
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">EIGRP</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">BGP</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">RIP</span>
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">IS-IS</span>
+                </div>
+            </div>
+
+            <div
+                class="bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-2xl p-6 shadow-xl hover:-translate-y-1 space-y-4">
+                <div class="flex items-center space-x-3 pb-3 border-b border-[#3E3A1D]">
+                    <i class="fa-solid fa-network-wired text-[#D4AF37] text-xl"></i>
+                    <h3 class="text-sm font-mono uppercase font-bold text-[#D4AF37] tracking-wider">NETWORKING</h3>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">TCP/IP
+                        (IPv4/IPv6)</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">OSI</span>
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Subnetting</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">LAN /
+                        VLAN</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">DNS /
+                        DHCP</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">NAT /
+                        ARP</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">STP /
+                        HSRP</span>
+                </div>
+            </div>
+
+            <div
+                class="bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-2xl p-6 shadow-xl hover:-translate-y-1 space-y-4">
+                <div class="flex items-center space-x-3 pb-3 border-b border-[#3E3A1D]">
+                    <i class="fa-solid fa-shield-halved text-[#D4AF37] text-xl"></i>
+                    <h3 class="text-sm font-mono uppercase font-bold text-[#D4AF37] tracking-wider">DEVICES & SECURITY
+                    </h3>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Cisco ISR
+                        Routers</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Catalyst
+                        Switches</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Suricata
+                        IDS</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Wazuh
+                        SIEM</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Splunk
+                        SIEM</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">ACLs &
+                        Firewalls</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">IPSec
+                        VPN</span>
+                </div>
+            </div>
+
+            <div
+                class="bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-2xl p-6 shadow-xl hover:-translate-y-1 space-y-4">
+                <div class="flex items-center space-x-3 pb-3 border-b border-[#3E3A1D]">
+                    <i class="fa-solid fa-wrench text-[#D4AF37] text-xl"></i>
+                    <h3 class="text-sm font-mono uppercase font-bold text-[#D4AF37] tracking-wider">TOOLS</h3>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Wireshark</span>
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">GNS3</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Packet
+                        Tracer</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Power
+                        BI</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Google
+                        Cloud (GCP)</span>
+                </div>
+            </div>
+
+            <div
+                class="bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-2xl p-6 shadow-xl hover:-translate-y-1 space-y-4">
+                <div class="flex items-center space-x-3 pb-3 border-b border-[#3E3A1D]">
+                    <i class="fa-solid fa-server text-[#D4AF37] text-xl"></i>
+                    <h3 class="text-sm font-mono uppercase font-bold text-[#D4AF37] tracking-wider">SYSTEMS & ADMIN</h3>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Linux
+                        (Ubuntu Server)</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Windows
+                        Server</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">VMware
+                        Workstation</span>
+                </div>
+            </div>
+
+            <div
+                class="bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-2xl p-6 shadow-xl hover:-translate-y-1 space-y-4">
+                <div class="flex items-center space-x-3 pb-3 border-b border-[#3E3A1D]">
+                    <i class="fa-solid fa-code text-[#D4AF37] text-xl"></i>
+                    <h3 class="text-sm font-mono uppercase font-bold text-[#D4AF37] tracking-wider">PROGRAMMING</h3>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Python</span>
+                    <span
+                        class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">Java</span>
+                    <span class="px-2.5 py-1.5 rounded-lg bg-[#1C1C24] border border-[#3E3A1D] text-gray-200">C</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 3: INTERNSHIPS (CENTERED TITLE & DUAL ACTION ICONS) -->
+    <section id="internships" class="space-y-8 mb-16">
+        <div class="text-center border-b border-[#D4AF37] pb-4">
+            <h2 class="text-4xl font-extrabold font-cinzel text-white">INTERNSHIPS</h2>
+        </div>
+
+        <div class="max-w-4xl mx-auto relative">
+            <div
+                class="rounded-3xl bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all p-7 sm:p-8 shadow-2xl space-y-6">
+
+                <div id="internship-slider-container" class="transition-opacity duration-300">
+                    <!-- Populated dynamically by JS with dual GitHub & Certificate links -->
+                </div>
+
+                <!-- SLIDER CONTROLS -->
+                <div class="flex items-center justify-between border-t border-[#3E3A1D]/60 pt-5 mt-4">
+                    <div class="flex space-x-2" id="internship-dots"></div>
+                    <div class="flex items-center space-x-3">
+                        <button id="internship-prev"
+                            class="w-10 h-10 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-colors flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <span id="internship-counter" class="font-mono text-xs text-gray-400 font-bold px-2">1 /
+                            2</span>
+                        <button id="internship-next"
+                            class="w-10 h-10 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-colors flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: PROJECTS (CENTERED TITLE & 6 EXACT PROJECTS) -->
+    <section id="projects" class="space-y-8 py-16">
+
+        <div class="relative text-center border-b border-[#D4AF37] pb-4">
+            <h2 class="text-4xl font-extrabold font-cinzel text-white">PROJECTS</h2>
+            <div class="absolute right-0 bottom-3 flex items-center space-x-3">
+                <button id="proj-slide-left"
+                    class="w-10 h-10 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <button id="proj-slide-right"
+                    class="w-10 h-10 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- PROJECTS SLIDER TRACK -->
+        <div id="projects-track" class="flex space-x-6 overflow-x-auto no-scrollbar scroll-smooth py-4">
+
+            <!-- PROJECT 1 -->
+            <div
+                class="w-[440px] sm:w-[540px] flex-shrink-0 bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-3xl p-6 flex flex-col justify-between shadow-2xl space-y-5">
+                <div class="space-y-4">
+                    <div class="pb-3 border-b border-[#3E3A1D]/60">
+                        <h3 class="text-lg font-bold text-white tracking-wide">Smart Unified Threat Management System
+                            (SUTMS)</h3>
+                        <div class="text-xs font-mono text-[#D4AF37] mt-0.5">Cyber Security & SIEM</div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                        <div class="flex items-center space-x-1.5 text-gray-300">
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Suricata IDS</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Wazuh SIEM</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">iptables</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="https://github.com/Rehan809/Smart-Unified-Threat-Management-System" target="_blank"
+                                rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center"
+                                title="GitHub Repo">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+                            <span class="px-2.5 py-1 rounded-full bg-[#1C1C24] text-gray-300 text-[11px] font-bold">AUG
+                                2025-MAY 2026</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-[#1C1C24]/80 p-5 rounded-2xl border border-[#3E3A1D]/40 text-xs text-gray-300 space-y-2.5 font-sans">
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Integrated Suricata IDS/IPS, Wazuh SIEM, and iptables on Ubuntu 24.04 with ~99% real-time
+                                threat detection accuracy.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Automated brute-force mitigation, dropping malicious IPs within seconds after 5 failed
+                                SSH attempts in 60s.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Optimized resource allocation, reducing Suricata memory usage by ~55% while sustaining
+                                under 30% CPU utilization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 2 -->
+            <div
+                class="w-[440px] sm:w-[540px] flex-shrink-0 bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-3xl p-6 flex flex-col justify-between shadow-2xl space-y-5">
+                <div class="space-y-4">
+                    <div class="pb-3 border-b border-[#3E3A1D]/60">
+                        <h3 class="text-lg font-bold text-white tracking-wide">Telecom Network Performance Analyzer &
+                            DAX Dashboard</h3>
+                        <div class="text-xs font-mono text-[#D4AF37] mt-0.5">Data Analytics & Business Intelligence
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                        <div class="flex items-center space-x-1.5 text-gray-300">
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Power BI</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">DAX</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Power Query</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="https://github.com/Munazza-Farees/Power-BI-Reports" target="_blank"
+                                rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center"
+                                title="GitHub Repo">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+                            <span class="px-2.5 py-1 rounded-full bg-[#1C1C24] text-gray-300 text-[11px] font-bold">SEP
+                                2025</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-[#1C1C24]/80 p-5 rounded-2xl border border-[#3E3A1D]/40 text-xs text-gray-300 space-y-2.5 font-sans">
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Built dynamic Power BI dashboards parsing network telemetry across major Indian telecom
+                                operators.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Formulated custom DAX measures and Power Query pipelines to evaluate key metrics like
+                                latency and throughput.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Visualized multi-region network load distribution to enable proactive infrastructure
+                                optimization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 3 -->
+            <div
+                class="w-[440px] sm:w-[540px] flex-shrink-0 bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-3xl p-6 flex flex-col justify-between shadow-2xl space-y-5">
+                <div class="space-y-4">
+                    <div class="pb-3 border-b border-[#3E3A1D]/60">
+                        <h3 class="text-lg font-bold text-white tracking-wide">Secure Campus Network Design & Access
+                            Control (NAC)</h3>
+                        <div class="text-xs font-mono text-[#D4AF37] mt-0.5">Enterprise Network Engineering</div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                        <div class="flex items-center space-x-1.5 text-gray-300">
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Cisco Packet Tracer</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">802.1Q VLAN</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">ACLs</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="https://github.com/Munazza-Farees/Secure-Campus-Network-Design-and-Network-Access-Control"
+                                target="_blank" rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center"
+                                title="GitHub Repo">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+                            <span class="px-2.5 py-1 rounded-full bg-[#1C1C24] text-gray-300 text-[11px] font-bold">JUN
+                                2025</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-[#1C1C24]/80 p-5 rounded-2xl border border-[#3E3A1D]/40 text-xs text-gray-300 space-y-2.5 font-sans">
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Designed a multi-campus network architecture featuring 802.1Q VLAN segmentation and
+                                inter-VLAN routing.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Configured rigid Access Control Lists (ACLs) and isolated DMZ server zones to protect
+                                critical resources.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Integrated HSRP gateway redundancy and Spanning Tree Protocol (STP) to eliminate single
+                                points of failure.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 4 -->
+            <div
+                class="w-[440px] sm:w-[540px] flex-shrink-0 bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-3xl p-6 flex flex-col justify-between shadow-2xl space-y-5">
+                <div class="space-y-4">
+                    <div class="pb-3 border-b border-[#3E3A1D]/60">
+                        <h3 class="text-lg font-bold text-white tracking-wide">Splunk Security Analytics & Threat
+                            Detection Pipeline</h3>
+                        <div class="text-xs font-mono text-[#D4AF37] mt-0.5">Security Operations Center (SOC)</div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                        <div class="flex items-center space-x-1.5 text-gray-300">
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Splunk SIEM</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Log Correlation</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Threat Hunting</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="https://github.com/Munazza-Farees/Splunk-Security-Analytics" target="_blank"
+                                rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center"
+                                title="GitHub Repo">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+                            <span class="px-2.5 py-1 rounded-full bg-[#1C1C24] text-gray-300 text-[11px] font-bold">NOV
+                                2025</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-[#1C1C24]/80 p-5 rounded-2xl border border-[#3E3A1D]/40 text-xs text-gray-300 space-y-2.5 font-sans">
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Built custom Splunk SIEM dashboards and alerting rules for real-time threat detection and
+                                incident response.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Parsed network packet captures and syslogs to correlate suspicious activities across
+                                enterprise endpoints.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Streamlined SOC triage workflows by automating alert severity classification and threat
+                                indicator extraction.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 5 -->
+            <div
+                class="w-[440px] sm:w-[540px] flex-shrink-0 bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-3xl p-6 flex flex-col justify-between shadow-2xl space-y-5">
+                <div class="space-y-4">
+                    <div class="pb-3 border-b border-[#3E3A1D]/60">
+                        <h3 class="text-lg font-bold text-white tracking-wide">Networking in Google Cloud Platform (GCP)
+                        </h3>
+                        <div class="text-xs font-mono text-[#D4AF37] mt-0.5">Cloud Infrastructure & Networking</div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                        <div class="flex items-center space-x-1.5 text-gray-300">
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">GCP VPC</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Cloud Router</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">IAM Security</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="https://github.com/Munazza-Farees/Networking-in-GC" target="_blank"
+                                rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center"
+                                title="GitHub Repo">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+                            <span class="px-2.5 py-1 rounded-full bg-[#1C1C24] text-gray-300 text-[11px] font-bold">OCT
+                                2025</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-[#1C1C24]/80 p-5 rounded-2xl border border-[#3E3A1D]/40 text-xs text-gray-300 space-y-2.5 font-sans">
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Architected custom Google Cloud VPC topologies with private subnetting and Cloud NAT
+                                gateway integration.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Deployed dynamic BGP routing via GCP Cloud Router to connect multi-region VM instances
+                                securely.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Enforced strict GCP IAM permissions and VPC Firewall rules to minimize cloud attack
+                                vectors.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 6 -->
+            <div
+                class="w-[440px] sm:w-[540px] flex-shrink-0 bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-3xl p-6 flex flex-col justify-between shadow-2xl space-y-5">
+                <div class="space-y-4">
+                    <div class="pb-3 border-b border-[#3E3A1D]/60">
+                        <h3 class="text-lg font-bold text-white tracking-wide">Secure Hash & Cryptographic Verification
+                            Utility</h3>
+                        <div class="text-xs font-mono text-[#D4AF37] mt-0.5">Applied Cryptography</div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                        <div class="flex items-center space-x-1.5 text-gray-300">
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">SHA-256 / 512</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Python</span>
+                            <span class="px-2 py-0.5 rounded bg-[#1C1C24] text-[#D4AF37]">Data Integrity</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="https://github.com/Munazza-Farees/Secure-Hash" target="_blank"
+                                rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center"
+                                title="GitHub Repo">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+                            <span class="px-2.5 py-1 rounded-full bg-[#1C1C24] text-gray-300 text-[11px] font-bold">JUL
+                                2025</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-[#1C1C24]/80 p-5 rounded-2xl border border-[#3E3A1D]/40 text-xs text-gray-300 space-y-2.5 font-sans">
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Implemented cryptographic hashing routines (SHA-256/SHA-512) for automated data integrity
+                                verification.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Developed CLI tools to detect file corruption and unauthorized data modifications during
+                                transit.</p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-[#D4AF37] font-bold mt-0.5">•</span>
+                            <p>Integrated HMAC verification pipelines to guarantee message authenticity and
+                                non-repudiation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 5: EDUCATION (CENTERED TITLE & ONLY B.TECH) -->
+    <section id="education" class="space-y-8 py-16">
+        <div class="text-center border-b border-[#D4AF37] pb-4">
+            <h2 class="text-4xl font-extrabold font-cinzel text-white">EDUCATION</h2>
+        </div>
+
+        <div
+            class="bg-[#0B2E20] border border-[#3E3A1D] hover:border-[#D4AF37] transition-all rounded-3xl p-8 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto">
+            <div class="space-y-2 text-center md:text-left">
+                <div class="text-xs font-mono text-[#D4AF37] font-bold uppercase tracking-wider">GRADUATE DEGREE</div>
+                <h3 class="text-2xl font-bold font-cinzel text-white">B.Tech in CSE (Networks)</h3>
+                <p class="text-sm font-medium text-gray-300">Kakatiya Institute of Technology and Science, Warangal</p>
+            </div>
+            <div
+                class="flex items-center space-x-6 border-t md:border-t-0 md:border-l border-[#3E3A1D] pt-4 md:pt-0 md:pl-8">
+                <div class="text-center">
+                    <div class="text-xs font-mono text-gray-400">YEAR</div>
+                    <div class="text-base font-bold text-white font-mono">Jun 2026</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xs font-mono text-gray-400">CGPA</div>
+                    <div class="text-xl font-extrabold text-[#D4AF37] font-mono">9.1</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: CERTIFICATIONS (CENTERED TITLE & MULTI-CARD SLIDER) -->
+    <section id="certifications" class="space-y-8 py-16">
+        <div class="text-center border-b border-[#D4AF37] pb-4">
+            <h2 class="text-4xl font-extrabold font-cinzel text-white">CERTIFICATIONS</h2>
+        </div>
+
+        <div class="relative max-w-4xl mx-auto h-[440px] flex items-center justify-center overflow-hidden"
+            id="cert-carousel-container">
+
+            <!-- CERT CARD 0 -->
+            <div onclick="openCertModal(0)"
+                class="cert-card absolute w-80 sm:w-96 bg-[#0B2E20] border-2 border-[#3E3A1D] rounded-2xl p-5 text-center space-y-4 shadow-2xl cursor-pointer hover:border-[#D4AF37]">
+                <div
+                    class="w-full h-full rounded-xl bg-[#1C1C24] border border-[#3E3A1D] flex flex-col items-center justify-center relative overflow-hidden group">
+                    <img src="assets/ccna-certificate.jpg" alt="CCNA Certificate"
+                        class="w-full h-full object-cover rounded-xl"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/0B2E20/D4AF37?text=CCNA+Certificate';">
+                    <div
+                        class="absolute inset-0 bg-[#000000]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-mono text-[#D4AF37]">
+                        <i class="fa-solid fa-expand mr-2"></i> Click to Expand
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-[11px] font-mono text-[#D4AF37] font-bold">CISCO CERTIFIED</div>
+                    <h3 class="text-base font-bold text-white line-clamp-1">Cisco Certified Network Associate (CCNA)
+                    </h3>
+                    <div class="flex items-center justify-between text-xs font-mono pt-1">
+                        <span class="text-gray-400">MAR 2026</span>
+                        <a href="https://drive.google.com/file/d/1q17BLtXqwTaRNztd7-jfdHgH31EvJo8u/view?usp=sharing"
+                            target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
+                            class="text-[#D4AF37] hover:underline flex items-center space-x-1">
+                            <span>Verify</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERT CARD 1 -->
+            <div onclick="openCertModal(1)"
+                class="cert-card absolute w-80 sm:w-96 bg-[#0B2E20] border-2 border-[#3E3A1D] rounded-2xl p-5 text-center space-y-4 shadow-2xl cursor-pointer hover:border-[#D4AF37]">
+                <div
+                    class="w-full h-44 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] flex flex-col items-center justify-center relative overflow-hidden group">
+                    <img src="assets/zero-trust-certificate.png" alt="Zero Trust Certificate"
+                        class="w-full h-full object-cover rounded-xl"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/0B2E20/D4AF37?text=Zero+Trust+Hackathon';">
+                    <div
+                        class="absolute inset-0 bg-[#000000]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-mono text-[#D4AF37]">
+                        <i class="fa-solid fa-expand mr-2"></i> Click to Expand
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-[11px] font-mono text-[#D4AF37] font-bold">NIT WARANGAL (Hackathon)</div>
+                    <h3 class="text-base font-bold text-white line-clamp-1">Zero Trust & Runtime Threat Detection</h3>
+                    <div class="flex items-center justify-between text-xs font-mono pt-1">
+                        <span class="text-gray-400">DEC 2025</span>
+                        <a href="https://drive.google.com/file/d/14n4etqCWg21gSuibgP05ZhKRy6niJugG/view?usp=sharing"
+                            target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
+                            class="text-[#D4AF37] hover:underline flex items-center space-x-1">
+                            <span>Verify</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERT CARD 2 -->
+            <div onclick="openCertModal(2)"
+                class="cert-card absolute w-80 sm:w-96 bg-[#0B2E20] border-2 border-[#3E3A1D] rounded-2xl p-5 text-center space-y-4 shadow-2xl cursor-pointer hover:border-[#D4AF37]">
+                <div
+                    class="w-full h-44 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] flex flex-col items-center justify-center relative overflow-hidden group">
+                    <img src="assets/nptel-blockchain-certificate.png" alt="NPTEL Blockchain Certificate"
+                        class="w-full h-full object-cover rounded-xl"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/0B2E20/D4AF37?text=NPTEL+Blockchain';">
+                    <div
+                        class="absolute inset-0 bg-[#000000]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-mono text-[#D4AF37]">
+                        <i class="fa-solid fa-expand mr-2"></i> Click to Expand
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-[11px] font-mono text-[#D4AF37] font-bold">NPTEL CERTIFIED</div>
+                    <h3 class="text-base font-bold text-white line-clamp-1">NPTEL Blockchain and its Applications</h3>
+                    <div class="flex items-center justify-between text-xs font-mono pt-1">
+                        <span class="text-gray-400">JAN-APR 2025</span>
+                        <a href="https://drive.google.com/file/d/1Sv5AesAA1uT_G0x6YJLFNv57Tf2Di5Tq/view?usp=sharing"
+                            target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
+                            class="text-[#D4AF37] hover:underline flex items-center space-x-1">
+                            <span>Verify</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERT CARD 3 -->
+            <div onclick="openCertModal(3)"
+                class="cert-card absolute w-80 sm:w-96 bg-[#0B2E20] border-2 border-[#3E3A1D] rounded-2xl p-5 text-center space-y-4 shadow-2xl cursor-pointer hover:border-[#D4AF37]">
+                <div
+                    class="w-full h-44 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] flex flex-col items-center justify-center relative overflow-hidden group">
+                    <img src="assets/google-ai-essentials.jpg" alt="Google AI Essentials Certificate"
+                        class="w-full h-full object-cover rounded-xl"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/0B2E20/D4AF37?text=Google+AI+Essentials';">
+                    <div
+                        class="absolute inset-0 bg-[#000000]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-mono text-[#D4AF37]">
+                        <i class="fa-solid fa-expand mr-2"></i> Click to Expand
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-[11px] font-mono text-[#D4AF37] font-bold">COURSERA</div>
+                    <h3 class="text-base font-bold text-white line-clamp-1">Google AI Essentials</h3>
+                    <div class="flex items-center justify-between text-xs font-mono pt-1">
+                        <span class="text-gray-400">SEP 2024</span>
+                        <a href="https://coursera.org/verify/EUWM03VLLFCM" target="_blank" rel="noopener noreferrer"
+                            onclick="event.stopPropagation();"
+                            class="text-[#D4AF37] hover:underline flex items-center space-x-1">
+                            <span>Verify</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERT CARD 4 -->
+            <div onclick="openCertModal(4)"
+                class="cert-card absolute w-80 sm:w-96 bg-[#0B2E20] border-2 border-[#3E3A1D] rounded-2xl p-5 text-center space-y-4 shadow-2xl cursor-pointer hover:border-[#D4AF37]">
+                <div
+                    class="w-full h-44 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] flex flex-col items-center justify-center relative overflow-hidden group">
+                    <img src="assets/nptel-computer-networks-certificate.png" alt="NPTEL Networks Certificate"
+                        class="w-full h-full object-cover rounded-xl"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/0B2E20/D4AF37?text=NPTEL+Computer+Networks';">
+                    <div
+                        class="absolute inset-0 bg-[#000000]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-mono text-[#D4AF37]">
+                        <i class="fa-solid fa-expand mr-2"></i> Click to Expand
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-[11px] font-mono text-[#D4AF37] font-bold">NPTEL CERTIFIED</div>
+                    <h3 class="text-base font-bold text-white line-clamp-1">NPTEL Computer Networks and IP Certificate
+                    </h3>
+                    <div class="flex items-center justify-between text-xs font-mono pt-1">
+                        <span class="text-gray-400">JAN-APR 2024</span>
+                        <a href="https://drive.google.com/file/d/1xxRfdQMASpk1cKi6RH8Jz9Wrhhze3Ccx/view?usp=sharing"
+                            target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
+                            class="text-[#D4AF37] hover:underline flex items-center space-x-1">
+                            <span>Verify</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERT CARD 5 -->
+            <div onclick="openCertModal(5)"
+                class="cert-card absolute w-80 sm:w-96 bg-[#0B2E20] border-2 border-[#3E3A1D] rounded-2xl p-5 text-center space-y-4 shadow-2xl cursor-pointer hover:border-[#D4AF37]">
+                <div
+                    class="w-full h-44 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] flex flex-col items-center justify-center relative overflow-hidden group">
+                    <img src="assets/gcp-badges.png" alt="GCP Networking Certificate"
+                        class="w-full h-full object-cover rounded-xl"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400/0B2E20/D4AF37?text=Google+Cloud+Networking';">
+                    <div
+                        class="absolute inset-0 bg-[#000000]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-mono text-[#D4AF37]">
+                        <i class="fa-solid fa-expand mr-2"></i> Click to Expand
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-[11px] font-mono text-[#D4AF37] font-bold">GOOGLE CLOUD</div>
+                    <h3 class="text-base font-bold text-white line-clamp-1">Networking in Google Cloud Fundamentals</h3>
+                    <div class="flex items-center justify-between text-xs font-mono pt-1">
+                        <span class="text-gray-400">GCP BADGE ECOSYSTEM</span>
+                        <a href="https://www.skills.google/public_profiles/e9c76453-d8d9-4163-83c9-d044d45ee597"
+                            target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
+                            class="text-[#D4AF37] hover:underline flex items-center space-x-1">
+                            <span>Verify</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CAROUSEL CONTROLS -->
+        <div class="flex items-center justify-center space-x-6">
+            <button id="cert-prev"
+                class="w-12 h-12 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center shadow-lg">
+                <i class="fa-solid fa-arrow-left text-lg"></i>
+            </button>
+
+            <div id="cert-indicator"
+                class="font-mono text-xs text-[#D4AF37] font-bold px-4 py-2 rounded-full bg-[#0B2E20] border border-[#3E3A1D]">
+                1 / 6
+            </div>
+
+            <button id="cert-next"
+                class="w-12 h-12 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center shadow-lg">
+                <i class="fa-solid fa-arrow-right text-lg"></i>
+            </button>
+        </div>
+
+    </section>
+
+    <!-- SECTION 7: CONTACT (CENTERED TITLE) -->
+    <section id="contact" class="pt-12 border-t border-[#3E3A1D] text-center space-y-8">
+        <div class="text-center">
+            <h2 class="text-4xl font-extrabold font-cinzel text-white">LET'S CONNECT</h2>
+        </div>
+
+        <div class="flex justify-center items-center space-x-4">
+            <a href="mailto:munazzafarees@gmail.com"
+                class="w-12 h-12 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center shadow-lg"
+                title="Email">
+                <i class="fa-solid fa-envelope text-lg"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/munazza-farees-a983142b7" target="_blank" rel="noopener noreferrer"
+                class="w-12 h-12 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center shadow-lg"
+                title="LinkedIn">
+                <i class="fa-brands fa-linkedin-in text-lg"></i>
+            </a>
+            <a href="https://github.com/Munazza-Farees" target="_blank" rel="noopener noreferrer"
+                class="w-12 h-12 rounded-xl bg-[#0B2E20] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center shadow-lg"
+                title="GitHub">
+                <i class="fa-brands fa-github text-lg"></i>
+            </a>
+        </div>
+
+        <div class="text-xs font-mono text-gray-500 pt-8">
+            © 2026 MUNAZZA FAREES. ALL RIGHTS RESERVED.
+        </div>
+
+    </section>
+
+    </main>
+
+    <!-- EXPANDABLE CERTIFICATE MODAL -->
+    <div id="cert-modal"
+        class="closed fixed inset-0 z-50 bg-[#000000]/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8">
+        <div
+            class="relative max-w-4xl w-full bg-[#0B2E20] border-2 border-[#D4AF37] rounded-3xl p-6 shadow-2xl space-y-6">
+
+            <div class="flex justify-between items-center border-b border-[#3E3A1D] pb-4">
+                <div>
+                    <span id="modal-tag" class="text-xs font-mono text-[#D4AF37] font-bold">CERTIFICATE DETAILS</span>
+                    <h3 id="modal-title" class="text-xl sm:text-2xl font-bold font-cinzel text-white">Certificate Title
+                    </h3>
+                </div>
+                <button onclick="closeCertModal()"
+                    class="w-10 h-10 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div
+                class="w-full h-[350px] sm:h-[480px] bg-[#1C1C24] rounded-2xl border border-[#3E3A1D] flex items-center justify-center overflow-hidden">
+                <img id="modal-img" src="" alt="Expanded Certificate" class="w-full h-full object-contain">
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="navModal(-1)"
+                    class="px-4 py-2 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] font-mono text-xs font-bold transition-all">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Previous
+                </button>
+                <div id="modal-counter" class="font-mono text-xs text-gray-400">1 / 6</div>
+                <button onclick="navModal(1)"
+                    class="px-4 py-2 rounded-xl bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] font-mono text-xs font-bold transition-all">
+                    Next <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JS INTERACTION LOGIC -->
+    <script>
+        // 1. MOBILE NAV TOGGLE
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // 2. INTERNSHIPS WITH DUAL ACTION ICONS (GITHUB + CERTIFICATE)
+        const internships = [
+            {
+                title: "Research & Development Intern",
+                company: "NIT Warangal (Dept. of CSE)",
+                duration: "MAY 2025 - JUL 2025",
+                mentor: "Prof. Bala Prakasa Rao Killi",
+                domain: "Network Security & Machine Learning",
+                skills: ["SDN Security", "LDoS Detection", "Machine Learning"],
+                github: "https://github.com/Munazza-Farees/",
+                certLink: "https://drive.google.com/file/d/1lGjbhYXGoXE8T4aRxie0RBya9E4mHEUi/view?usp=sharing",
+                bullets: [
+                    "Conducted R&D on Low-rate Denial of Service (LDoS) attack detection in Software-Defined Networks (SDN).",
+                    "Leveraged innovative machine learning algorithms to address critical challenges in identifying subtle network traffic anomalies.",
+                    "Achieved exceptional attack detection performance across diverse high-throughput datasets."
+                ]
+            },
+            {
+                title: "Cybersecurity & Steganography Intern",
+                company: "Edunet Foundation",
+                duration: "MAY 2025 - JUN 2025",
+                mentor: "Edunet Team",
+                domain: "Medical Image Security & Cryptography",
+                skills: ["AES Encryption", "LSB Steganography", "MAC Auth"],
+                github: "https://github.com/Munazza-Farees/Edunet-Internship",
+                certLink: "https://drive.google.com/file/d/13a8aOWpA5zSfZjfbdgYYtbeToXo3SRGI/view?usp=sharing",
+                bullets: [
+                    "Concealed AES-encrypted patient medical records inside images using LSB steganography techniques.",
+                    "Implemented MAC authentication mechanisms so any tampering in transit or storage is immediately caught.",
+                    "Preserved DICOM medical image structural integrity with zero perceptible visual distortion."
+                ]
+            }
+        ];
+
+        let currentInternship = 0;
+        const internshipContainer = document.getElementById('internship-slider-container');
+        const internshipDots = document.getElementById('internship-dots');
+        const internshipCounter = document.getElementById('internship-counter');
+
+        function renderInternship(index) {
+            const data = internships[index];
+            internshipContainer.innerHTML = `
+                <div class="space-y-4">
+                    <!-- ROW 1: Title & Company Left | Duration Right -->
+                    <div class="flex flex-wrap items-center justify-between border-b border-[#3E3A1D]/60 pb-3 gap-2">
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-bold font-cinzel text-white">${data.title}</h3>
+                            <div class="text-xs font-mono text-[#D4AF37] font-semibold mt-0.5">${data.company} • Mentor: ${data.mentor}</div>
+                        </div>
+                        <div class="px-3 py-1 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] font-mono text-xs font-bold">
+                            ${data.duration}
+                        </div>
+                    </div>
+
+                    <!-- ROW 2: Domain & Top 3 Skills | DUAL ICONS (GitHub + Certificate) -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 text-xs font-mono py-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-gray-400 font-bold uppercase">${data.domain} |</span>
+                            ${data.skills.map(s => `<span class="px-2.5 py-0.5 rounded bg-[#1C1C24] text-gray-200">${s}</span>`).join('')}
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="${data.github}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center" title="GitHub Repository">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+                            <a href="${data.certLink}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-[#1C1C24] border border-[#3E3A1D] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#000000] transition-all flex items-center justify-center" title="Verify Internship Certificate">
+                                <i class="fa-solid fa-award text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ROW 3: 3 Bullet points -->
+                    <div class="bg-[#1C1C24]/80 p-5 sm:p-6 rounded-2xl border border-[#3E3A1D]/40 text-sm text-gray-200 space-y-3 font-sans">
+                        ${data.bullets.map(b => `
+                            <div class="flex items-start space-x-3">
+                                <span class="text-[#D4AF37] text-base font-bold">•</span>
+                                <p class="leading-relaxed">${b}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            internshipDots.innerHTML = internships.map((_, i) => `
+                <button onclick="setInternship(${i})" class="w-3 h-3 rounded-full transition-all ${i === index ? 'bg-[#D4AF37] w-6' : 'bg-[#1C1C24] border border-[#3E3A1D]'}" aria-label="Slide ${i + 1}"></button>
+            `).join('');
+
+            if (internshipCounter) {
+                internshipCounter.textContent = `${index + 1} / ${internships.length}`;
+            }
+        }
+
+        function setInternship(index) {
+            currentInternship = index;
+            renderInternship(currentInternship);
+        }
+
+        document.getElementById('internship-prev').addEventListener('click', () => {
+            currentInternship = (currentInternship - 1 + internships.length) % internships.length;
+            renderInternship(currentInternship);
+        });
+
+        document.getElementById('internship-next').addEventListener('click', () => {
+            currentInternship = (currentInternship + 1) % internships.length;
+            renderInternship(currentInternship);
+        });
+
+        renderInternship(currentInternship);
+
+        // 3. PROJECTS SCROLL
+        const projTrack = document.getElementById('projects-track');
+        document.getElementById('proj-slide-left').addEventListener('click', () => {
+            projTrack.scrollBy({ left: -380, behavior: 'smooth' });
+        });
+        document.getElementById('proj-slide-right').addEventListener('click', () => {
+            projTrack.scrollBy({ left: 380, behavior: 'smooth' });
+        });
+
+        // 4. CERTIFICATIONS CAROUSEL & EXPANDABLE MODAL
+        const certData = [
+            {
+                tag: "CISCO CERTIFIED",
+                title: "Cisco Certified Network Associate (CCNA)",
+                link: "https://drive.google.com/file/d/1q17BLtXqwTaRNztd7-jfdHgH31EvJo8u/view?usp=sharing",
+                img: "assets/ccna-certificate.jpg"
+            },
+            {
+                tag: "NPTEL CERTIFIED",
+                title: "NPTEL Blockchain and its Applications",
+                link: "https://drive.google.com/file/d/1Sv5AesAA1uT_G0x6YJLFNv57Tf2Di5Tq/view?usp=sharing",
+                img: "assets/nptel-blockchain-certificate.png"
+            },
+            {
+                tag: "GOOGLE / COURSERA",
+                title: "Google AI Essentials",
+                link: "https://coursera.org/google-ai-essentials",
+                img: "assets/google-ai-essentials.jpg"
+            },
+            {
+                tag: "NIT WARANGAL",
+                title: "Zero Trust & Runtime Threat Detection",
+                link: "https://drive.google.com/file/d/14n4etqCWg21gSuibgP05ZhKRy6niJugG/view?usp=sharing",
+                img: "assets/zero-trust-certificate.png"
+            },
+            {
+                tag: "NPTEL CERTIFIED",
+                title: "NPTEL Computer Networks and IP Certificate",
+                link: "https://drive.google.com/file/d/1xxRfdQMASpk1cKi6RH8Jz9Wrhhze3Ccx/view?usp=sharing",
+                img: "assets/nptel-computer-networks-certificate.png"
+            },
+            {
+                tag: "GOOGLE CLOUD",
+                title: "Networking in Google Cloud Fundamentals",
+                link: "https://www.skills.google/public_profiles/e9c76453-d8d9-4163-83c9-d044d45ee597",
+                img: "assets/gcp-badges.png"
+            }
+        ];
+
+        const certCards = Array.from(document.querySelectorAll('.cert-card'));
+        let activeCertIndex = 0;
+        let modalIndex = 0;
+
+        function updateCertCarousel() {
+            certCards.forEach((card, i) => {
+                card.className = 'cert-card absolute w-80 sm:w-96 bg-[#0B2E20] border-2 border-[#3E3A1D] rounded-2xl p-5 text-center space-y-4 shadow-2xl cursor-pointer hover:border-[#D4AF37]';
+
+                const prevIndex = (activeCertIndex - 1 + certCards.length) % certCards.length;
+                const nextIndex = (activeCertIndex + 1) % certCards.length;
+
+                if (i === activeCertIndex) {
+                    card.classList.add('active');
+                } else if (i === prevIndex) {
+                    card.classList.add('prev');
+                } else if (i === nextIndex) {
+                    card.classList.add('next');
+                } else {
+                    card.classList.add('hidden-slide');
+                }
+            });
+
+            document.getElementById('cert-indicator').textContent = `${activeCertIndex + 1} / ${certCards.length}`;
+        }
+
+        document.getElementById('cert-prev').addEventListener('click', (e) => {
+            e.stopPropagation();
+            activeCertIndex = (activeCertIndex - 1 + certCards.length) % certCards.length;
+            updateCertCarousel();
+        });
+
+        document.getElementById('cert-next').addEventListener('click', (e) => {
+            e.stopPropagation();
+            activeCertIndex = (activeCertIndex + 1) % certCards.length;
+            updateCertCarousel();
+        });
+
+        // MODAL FUNCTIONS
+        const modal = document.getElementById('cert-modal');
+        function openCertModal(index) {
+            modalIndex = index;
+            renderModalContent();
+            modal.classList.remove('closed');
+            modal.classList.add('open');
+        }
+
+        function closeCertModal() {
+            modal.classList.remove('open');
+            modal.classList.add('closed');
+        }
+
+        function renderModalContent() {
+            const data = certData[modalIndex];
+            document.getElementById('modal-tag').textContent = data.tag;
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-img').src = data.img;
+            document.getElementById('modal-counter').textContent = `${modalIndex + 1} / ${certData.length}`;
+        }
+
+        function navModal(dir) {
+            modalIndex = (modalIndex + dir + certData.length) % certData.length;
+            renderModalContent();
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeCertModal();
+        });
+
+        updateCertCarousel();
+
+        // 5. COPY EMAIL TO CLIPBOARD
+        const copyBtn = document.getElementById('copy-email-btn');
+        const emailAddress = document.getElementById('email-address').innerText;
+        const toastMsg = document.getElementById('toast-msg');
+
+        copyBtn.addEventListener('click', () => {
+            const el = document.createElement('textarea');
+            el.value = emailAddress;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            toastMsg.classList.remove('hidden');
+            setTimeout(() => {
+                toastMsg.classList.add('hidden');
+            }, 2500);
+        });
+    </script>
+
+    <!-- JAVASCRIPT FOR MOVING BACKGROUND STARS/ELEMENTS -->
+    <script>
+            (function initStarfield() {
+                const canvas = document.getElementById('starfield-canvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+
+                let width = canvas.width = canvas.parentElement.offsetWidth;
+                let height = canvas.height = canvas.parentElement.offsetHeight;
+
+                window.addEventListener('resize', () => {
+                    width = canvas.width = canvas.parentElement.offsetWidth;
+                    height = canvas.height = canvas.parentElement.offsetHeight;
+                });
+
+                const numStars = 70;
+                const stars = [];
+
+                for (let i = 0; i < numStars; i++) {
+                    stars.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        radius: Math.random() * 1.8 + 0.5,
+                        color: Math.random() > 0.3 ? '#D4AF37' : '#FFFFFF',
+                        alpha: Math.random() * 0.7 + 0.3,
+                        speedY: Math.random() * 0.4 + 0.1,
+                        speedX: (Math.random() - 0.5) * 0.2
+                    });
+                }
+
+                function animate() {
+                    ctx.clearRect(0, 0, width, height);
+
+                    stars.forEach(star => {
+                        ctx.save();
+                        ctx.globalAlpha = star.alpha;
+                        ctx.fillStyle = star.color;
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.restore();
+
+                        // Move stars slowly upwards
+                        star.y -= star.speedY;
+                        star.x += star.speedX;
+
+                        // Reset position when off-screen
+                        if (star.y < 0) {
+                            star.y = height;
+                            star.x = Math.random() * width;
+                        }
+                        if (star.x < 0 || star.x > width) {
+                            star.x = Math.random() * width;
+                        }
+                    });
+
+                    requestAnimationFrame(animate);
+                }
+
+                animate();
+            })();
+    </script>
+</body>
+
+</html>
